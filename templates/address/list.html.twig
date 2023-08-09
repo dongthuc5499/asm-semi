@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Address List{% endblock %}
+
+{% block body %}
+    <h1>Address List</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Province</th>
+            <th>District</th>
+            <th>Ward</th>
+            <th>Street</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addresses %}
+            <tr>
+                <td>{{ address.province }}</td>
+                <td>{{ address.district }}</td>
+                <td>{{ address.ward }}</td>
+                <td>{{ address.street }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

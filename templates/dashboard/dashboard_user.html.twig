@@ -1,0 +1,62 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+    {% for user in users %}
+        <div style="width: 480px">
+        <div class="card shadow" style="width:420px; height: 100%;">
+            <img class="card-img-top" src="{{ asset('uploads/image/' ~ user.avatar) }}" alt="Card image" style="width: 100%; height: 400px; object-fit: cover;">
+            <div class="card-body">
+                <h4 class="card-title"><b>{{ user.username }}</b>
+                    {% if 'ROLE_SUPER_ADMIN' in user.roles %}
+                        <span class="badge bg-info" style="font-size: 13px;">Admin</span>
+                    {% elseif 'ROLE_USER' in user.roles %}
+                        <span class="badge bg-secondary" style="font-size: 13px;">User</span>
+                    {% endif %}
+                    </h4>
+                <span class="card-text">
+                    <div class="row">
+                    <div class="col-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone-fill" viewBox="0 0 16 16" style="color: #d2a8ff">
+                          <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"/>
+                        </svg> {{ user.phone }}
+                    </div>
+                    <div class="col-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16" style="color: #ffcacc">
+                          <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
+                        </svg> {{ user.sex }}
+                    </div>
+                    <div class="col-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-top" viewBox="0 0 16 16" style="color: #F31559">
+                          <path d="M2 14.5a.5.5 0 0 0 .5.5h11a.5.5 0 1 0 0-1h-1v-1a4.5 4.5 0 0 0-2.557-4.06c-.29-.139-.443-.377-.443-.59v-.7c0-.213.154-.451.443-.59A4.5 4.5 0 0 0 12.5 3V2h1a.5.5 0 0 0 0-1h-11a.5.5 0 0 0 0 1h1v1a4.5 4.5 0 0 0 2.557 4.06c.29.139.443.377.443.59v.7c0 .213-.154.451-.443.59A4.5 4.5 0 0 0 3.5 13v1h-1a.5.5 0 0 0-.5.5zm2.5-.5v-1a3.5 3.5 0 0 1 1.989-3.158c.533-.256 1.011-.79 1.011-1.491v-.702s.18.101.5.101.5-.1.5-.1v.7c0 .701.478 1.236 1.011 1.492A3.5 3.5 0 0 1 11.5 13v1h-7z"/>
+                        </svg> {{ user.birthday|date('d/m/Y') }}
+                    </div>
+                    </div>
+                    {% for address in addresses %}
+                        {% if address.user.id == user.getId() %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-map" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z"/>
+                    </svg>  {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.province }}
+                        {% endif %}
+                    {% endfor %}
+                </span>
+                <br><br>
+                {#{% if 'ROLE_SUPER_ADMIN' not in user.roles %}
+                    <a href="{{ path('dashboard_make_admin', { 'id': user.id }) }}" class="btn btn-primary"><b>Thành Admin</b></a>
+                {% endif %}#}
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+    <style>
+        .shadow {
+            width: 250px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+        }
+    </style>
+{% endblock %}

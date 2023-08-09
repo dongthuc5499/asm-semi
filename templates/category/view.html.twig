@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="container mt-3">
+        <h1 class="mt-5 mb-6" style="font-size: 60px; left: 60px">{{ categories.catname }}</h1>
+        <div class="row">
+            {% set itemsPerPage = 40 %} {# Số sản phẩm hiển thị trên mỗi trang #}
+            {% set currentPage = app.request.get('page', 1) %}
+            {% set start = (currentPage - 1) * itemsPerPage %}
+            {% set end = start + itemsPerPage %}
+            {% for product in products|slice(start, end) %}
+            {% if loop.index % 4 == 1 %}
+        </div>
+        <div class="row">{# Mở một hàng mới cho cột thứ hai #}
+            {% endif %}
+            <div class="col-md-3">
+                <div class="card zoom-effect" style="width: 310px; border: none;"> {# Loại bỏ viền đen xung quanh card #}
+                    <div class="card-body" style="height: 370px;"> {# Đặt chiều cao cố định cho card-body #}
+                        <a href="{{ path('product_details', {'id': product.id}) }}" style="text-decoration: none; color: inherit;"> {# Bấm vào card để mở trang sản phẩm #}
+                            <img src="{{ asset('uploads/image/' ~ product.productImage) }}" class="card-img-top" height="200px" width="250px" alt="Product Image">
+                            <br><br>
+                            <h4 style="height: 70px; overflow: hidden; font-size: 18px;">{{ product.name }}</h4> {# Đặt chiều cao cố định và ẩn overflow cho tiêu đề #}
+                            <div class="row">
+                                <div class="col">
+                                <span style="font-size: 20px">
+                                    <strong style="color: red">{{ product.price|number_format(0, ',', '.') }}₫ </strong>
+                                </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div><br>
+            </div>
+
+            {% endfor %}
+        </div>
+        <br>
+        <div class="pagination-container text-center"> {# Thêm class "pagination-container" #}
+            {% set totalPages = (products|length / itemsPerPage)|round(0, 'ceil') %}
+            <div class="pagination">
+                {% for page in 1..totalPages %}
+                    <a href="{{ path('product_list', {'page': page}) }}" class="{% if page == currentPage %}active{% endif %}">{{ page }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #7B7B7B;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+        .category-link {
+            display: inline-block;
+            text-decoration: none;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+
+        .category-link:focus,
+        .category-link:hover {
+            outline: none;
+        }
+        .category-divider {
+            border: none;
+            border-top: 1px solid black;
+            margin-bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .category-name {
+            color: black;
+            text-decoration: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold
+        }
+        .category-link {
+            text-decoration: none;
+        }
+        .category-link:hover {
+            text-decoration: none;
+        }
+
+        .zoom-effect img {
+            transition: transform 1s ease;
+        }
+
+        .zoom-effect:hover img {
+            transform: scale(1.1);
+        }
+
+    </style>
+
+
+
+{% endblock %}

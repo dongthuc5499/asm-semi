@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{ asset ('uploads/image/logodt.jpg') }}">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <title>{% block title %}DongThuc Store{% endblock %}</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    {% block stylesheets %}{% endblock %}
+
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+<style>
+    body {
+        background-color: #E5E5E5
+    }
+</style>
+<nav class="navbar" style="background: white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a class="navbar-brand" href="/">
+                    <img src="{{ asset('uploads/image/logodt.jpg') }}" style="width:55px; height: 35px;">
+                </a>
+            </div>
+            <div class="cold-flex align-items-left" style="width: 600px">
+                <form class="navbar-form navbar-left" method="GET" action="{{ path('product_search') }}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="search" id="searchInput" style="border-radius: 20px">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" font-size="20px" >
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            {#<div class="col d-flex align-items-center">
+                {% if is_granted('ROLE_ADMIN') %}
+                <!-- Category -->
+                <a class="nav-link" href="{{ relative_path('/admin/category/create') }} "
+                   style="width: 140px; font-weight: bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                         class="bi bi-plus-square" viewBox="0 0 18 18">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    Add Category
+                </a>
+            </div>
+            <div class="col d-flex align-items-center">
+                <!-- Add Product -->
+                <a class="nav-link" href="{{ relative_path('/admin/product/create') }} "
+                   style="width: 120px; font-weight: bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                         class="bi bi-plus-square" viewBox="0 0 18 18">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    Add Product
+                </a>
+                {% endif %}
+            </div>#}
+            <div class="col d-flex align-items-center">
+                <button class="btn btn-secondary dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        style="background-color: #BDBDBD; width: 130px; color: black; font-weight: bold; border: none">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 24px;" width="16" height="16"
+                         fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                    Category
+                </button>
+                <ul class="dropdown-menu">
+                    {% for category in categories %}
+                        <li><a class="dropdown-item"
+                               href="{{ path('category_view',{'id':category.id}) }}">{{ category.catname }}</a></li>
+                    {% endfor %}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{{ path('category_details') }}">Category List</a></li>
+                </ul>
+            </div>
+            <!-- gio hang -->
+            {#<div class="col d-flex align-items-center">
+                <a href="{{ path('cart') }}" class="btn btn-unstyled">
+                    <svg xmlns="http://www.w3.org/2000/svg" font-size="25" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <span id="cart-count" class="badge bg-danger position-absolute start-85 translate-middle" style="font-size: 10px; top: 8px">{{ cart.items.count }}</span>
+                </a>
+            </div>#}
+            {% if app.user %}
+                <div class="col">
+                    <div class="dropdown">
+                        <a type="button" data-bs-toggle="dropdown" style="width: 60px">
+                            <img src="{{ asset('uploads/image/' ~ app.user.avatar) }}" alt=""
+                                 style="width:45px; height: 45px; border: 0" class="rounded-pill">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-white custom-menu">
+                            <li>
+                                <a class="d-flex align-items-center dropdown-item mb-0 custom-link"
+                                   href="{{ path('app_user') }}">
+                                    <div style="font-weight: bold;">{{ app.user.username }}</div>
+                                    {#<img src="{{ asset('uploads/image/' ~ app.user.avatar) }}" alt="" style="width: 45px; height: 45px; border: 0;" class="rounded-pill">&emsp;>#}
+                                </a>
+                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div style="height: 10px"></div>
+                                <li>
+                                    <a class="d-flex align-items-center dropdown-item mb-0 custom-link"
+                                       href="{{ path('dashboard_index') }}" style="height: 40px">
+
+                                        <div style="font-weight: bold;">Dashboard</div>
+                                        <img src="{{ asset('uploads/image/dashboard.png') }}" alt=""
+                                             style="width: 45px; height: 45px; border: 0;" class="rounded-pill">
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <li>
+                                <a class="d-flex align-items-center dropdown-item mb-0 custom-link"
+                                   href="{{ path('app_logout') }}" style="height: 40px">
+
+                                    <div style="font-weight: bold;">Log Out</div>
+                                    <img src="{{ asset('uploads/image/logout-sign-out-icon-in-line-style-vector.jpg') }}"
+                                         alt="" style="width: 45px; height: 45px; border: 0;" class="rounded-pill">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col">
+                    <a class="btn btn-warning" style="font-family: Comic Sans MS cursive; width: 80px"
+                       href="{{ path('app_register') }}">Sign Up</a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-success" style="font-family: Comic Sans MS cursive"
+                       href="{{ path('app_login') }}">Login</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% if message is defined %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endif %}
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous">
+</script>
+<script src="/js/script.js"></script>
+
+
+{% block body %}{% endblock %}
+
+{{ include('footer.html.twig') }}
+
+{% block javascripts %}{% endblock %}
+
+
+</body>
+<style>
+    .custom-menu {
+        left: auto !important;
+        right: 0;
+        transform: translateX(-5%);
+    }
+
+    .btn:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .btn-unstyled {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .btn-unstyled:hover {
+        outline: none;
+    }
+
+    .custom-link {
+        color: inherit; /* Màu chữ kế thừa từ phong cách mặc định */
+        text-decoration: none; /* Loại bỏ gạch chân */
+    }
+
+    .custom-link:focus,
+    .custom-link:hover,
+    .custom-link:active {
+        outline-style: solid;
+        outline-color: #000000;
+        outline-width: 0.5px;
+    {#background-color: #52575c; /* Màu nền xám khi nhấn hoặc di chuột qua */#} background-color: #FFFFFF;
+    }
+
+</style>
+</html>

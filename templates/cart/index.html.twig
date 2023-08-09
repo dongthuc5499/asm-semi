@@ -1,0 +1,92 @@
+{#
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Your Cart</h1>
+        {% if form.items is defined and form.items is not null and form.items|length > 0 %}
+            <div class="row mt-4">
+                <!-- List of items -->
+                <div class="col-md-8">
+                    <form action="{{ path('cart', {orderId: cart.id}) }}" method="POST">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white d-flex">
+                                <h5>Items</h5>
+                                <div class="ml-auto">
+                                    <button type="submit" class="btn btn-warning">Save</button>
+                                    <a href="{{ path('clear_items', {orderId: cart.id}) }}" class="btn btn-light">Clear</a>
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for item in form.items %}
+                                    <li class="list-group-item d-flex">
+                                        <div class="flex-fill mr-2">
+                                            <img src="{{ asset('uploads/image/' ~ item.vars.data.product.productImage) }}" width="200" alt="Product image">
+                                        </div>
+                                        <div class="flex-fill mr-2">
+                                            <h5 class="mt-0 mb-0">{{ item.vars.data.product.name }}</h5>
+                                            <small>{{ item.vars.data.product.description[:50] }}...</small>
+                                            <div class="form-inline mt-2">
+                                                <div class="form-group mb-0 mr-2">
+                                                    <div class="form-group mb-0 mr-2">
+                                                        <span class="number-wrapper" style="display: inline-block;border: 1px solid #ccc;padding: 5px 10px;border-radius: 10px;">{{ item.quantity.vars.value }}</span>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        {{ form_errors(item.quantity) }}
+                                                    </div>
+                                                </div>
+                                                <a href="{{ path('remove_item', {orderId: cart.id, itemId: item.vars.data.id}) }}" style="color: #505050; font-size: 20px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                                    </svg></a>
+                                            </div>
+                                        </div>
+                                        <div class="flex-fill mr-2 text-right">
+                                            <b>{{ item.vars.data.product.price|number_format(0, ',', '.') }} ₫</b>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <!-- Summary -->
+                <div class="col-md-4">
+                    <div class="card mt-4 mt-md-0">
+                        <h5 class="card-header bg-dark text-white">Summary</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div><b>Total</b></div>
+                                <span><b>{{ cart.total }}</b></span>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="{{ path('address_create') }}" class="btn btn-warning w-100">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Your cart is empty. Go to the <a href="/">product list</a>.
+            </div>
+            <div class="alert alert-warning">
+                You have not selected any products yet, please add products to cart.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Add the following code snippet to display the quantity in the Cart button -->
+    <script>
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const itemCount = {{ form.vars.value.items|default([])|length }};
+            cartCount.textContent = itemCount > 0 ? itemCount : '';
+        }
+
+        updateCartCount();
+    </script>
+
+{% endblock %}
+#}

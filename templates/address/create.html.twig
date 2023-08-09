@@ -1,0 +1,251 @@
+{#{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block title %}Order Information{% endblock %}
+
+{% block body %}
+    <div class="container"><br><br>
+        <div class="row justify-content-center">
+            <div class="col-md-9" style="background: white">
+                <h2><b>Order Information</b></h2>
+                <hr>
+                <div id="addressContainer">
+                    {% if address.id is not null %}
+                        <div class="form-group">
+                            <p style="color: #ef1b28; font-size: 18px">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16" style="font-size: 17px">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                </svg>
+                                Delivery Address
+                            </p>
+                            <div class="row">
+                                <div class="col-11" style="font-size: 16px"><b>{{ address.user.username }} &emsp;</b><span> {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.province }}</span></div>
+                                <div class="col-1">
+                                    <button type="button" class="edit-address" {% if address.id is defined %}data-form-url="{{ path('address_edit', {'id': address.id}) }}"{% endif %} data-toggle="modal" data-target="#editAddressModal" style="background: #36a6fd; border: 0; border-radius: 5px; color: white">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% if cart.items|length > 0 %}
+                            <div style="background: #e5e5e5; height: 20px; width: 1000px; margin-left: -100px; margin-right: -100px;"></div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Unit price</th>
+                                    <th>Quantity</th>
+                                    <th>Into money</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in cart.items %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('uploads/image/' ~ item.product.productImage) }}" width="100" alt="Product image">
+                                            {{ item.product.name }}
+                                        </td>
+                                        <td class="align-middle text-center">{{ item.product.price|number_format(0, ',', '.') }} ₫</td>
+                                        <td class="align-middle text-center">{{ item.quantity }}</td>
+                                        <td class="align-middle text-center">{{ (item.product.price * item.quantity)|number_format(0, ',', '.') }} ₫</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="background: #e5e5e5; height: 20px; width: 1000px; margin-left: -100px; margin-right: -100px;"></div>
+                        {% endif %}
+                        <div class="form-group">
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="title"><b>Transport fee:</b></span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="shipprice"><b>Free</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="title" style="font-size: 20px"><b>Total amount:</b></span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span><b style="color: red; font-size: 24px">{{ cart.total }}</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><br>
+                            <a href="{{ path('address_success') }}" class="btn btn-primary btn-block" style="font-size: 18px; height: 60px; padding: 15px; background: #0b5ed7"><b>Order now</b></a>
+                        </div>
+                    {% else %}
+                        <p style="color: #ef1b28; font-size: 16px" class="text-right">
+                            Delivery Address
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16" style="font-size: 17px">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                        </p>
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.user) }}
+                            {{ form_widget(form.user, { 'attr': {'class': 'form-control', 'disabled': 'disabled'} }) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.province) }}
+                            {{ form_widget(form.province, { 'attr': {'class': 'form-control select2'} }) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.district) }}
+                            {{ form_widget(form.district, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.ward) }}
+                            {{ form_widget(form.ward, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.street) }}
+                            {{ form_widget(form.street, { 'attr': {'class': 'form-control'} }) }}
+                        </div><br>
+
+                        {% if cart.items|length > 0 %}
+                            <div style="background: #e5e5e5; height: 20px; width: 1000px; margin-left: -100px; margin-right: -100px;"></div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Unit price</th>
+                                    <th>Quantity</th>
+                                    <th>Into money</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in cart.items %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('uploads/image/' ~ item.product.productImage) }}" width="100" alt="Product image">
+                                            {{ item.product.name }}
+                                        </td>
+                                        <td class="align-middle text-center">{{ item.product.price|number_format(0, ',', '.') }} ₫</td>
+                                        <td class="align-middle text-center">{{ item.quantity }}</td>
+                                        <td class="align-middle text-center">{{ (item.product.price * item.quantity)|number_format(0, ',', '.') }} ₫</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="background: #e5e5e5; height: 20px; width: 1000px; margin-left: -100px; margin-right: -100px;"></div>
+                        {% endif %}
+                        <div class="form-group">
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="title"><b>Transport fee:</b></span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="shipprice"><b>Free</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="title" style="font-size: 20px"><b>Total amount:</b></span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span><b style="color: red; font-size: 24px">{{ cart.total }}</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><br>
+                            <button type="submit" class="btn btn-primary btn-block" style="font-size: 18px; height: 50px; background: #0b5ed7"><b>Order now</b></button>
+                        </div>
+                        {{ form_end(form) }}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div><br><br><br><br>
+    </div>
+
+
+
+
+    <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br><br><br><br><br><br><br><br>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(window).on('load', function() {
+            $('.select2').select2();
+            $('.edit-address').on('click', function(event) {
+                var formUrl = $(this).data('form-url');
+                var modalBody = $('#editAddressModal').find('.modal-body');
+
+                $.ajax({
+                    url: formUrl,
+                    method: 'GET',
+                    success: function(response) {
+                        modalBody.html(response.html);
+
+                        // Thêm sự kiện click cho nút "Save changes"
+                        $('#editAddressModal').find('.modal-footer .btn-primary').on('click', function(event) {
+                            var form = $('#editAddressModal').find('form');
+                            var formData = form.serialize();
+
+                            $.ajax({
+                                url: form.attr('action'),
+                                method: form.attr('method'),
+                                data: formData,
+                                success: function(response) {
+                                    // Cập nhật nội dung trang
+                                    $('#addressContainer').html(response.html);
+                                    $('#editAddressModal').modal('hide');
+
+                                    // Reload trang
+                                    location.reload();
+                                },
+                                error: function(xhr) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+            // Ẩn modal sau khi thực hiện thành công ajax request
+            $('#editAddressModal').on('hidden.bs.modal', function () {
+                $(this).find('.modal-body').empty();
+            });
+        });
+    </script>
+{% endblock %}
+#}

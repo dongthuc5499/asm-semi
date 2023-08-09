@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+{% block body %}
+
+
+
+    {# First Slide #}
+
+
+    <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel"
+         style="box-sizing: border-box; padding: 0; margin: 0;">
+        <div class="carousel-inner" style="height: 150px; padding: 0 0; position: relative; width: 100vw;">
+            <div class="carousel-item active">
+                <div class="d-flex">
+                    <div>
+                        <img src="{{ asset('uploads/image/lap-720-220-720x220-1.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                    <div>
+                        <img src="{{ asset('uploads/image/dh-hieu-720-220-720x220-2.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                    <div>
+                        <img src="{{ asset('uploads/image/Redmi-Note-12-720-220-720x220-1.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+                    <div>
+                        <img src="{{ asset('uploads/image/Redmi-Note-12-720-220-720x220-1.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                    <div>
+                        <img src="{{ asset('uploads/image/lap-720-220-720x220-1.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                    <div>
+                        <img src="{{ asset('uploads/image/dh-hieu-720-220-720x220-2.webp') }}" class=""
+                             style="height: 150px;" alt="...">
+                    </div>
+                </div>
+            </div>
+{#            <div class="carousel-item">#}
+{#            </div>#}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    {# End Slide #}
+
+    <ul class="list-group">
+        <div class="container mt-2" style="background: white; border-radius: 6px">
+            {#<div class=""><br>
+                <h3 style="font-weight: bold">Category List</h3>
+                <hr class="category-divider">
+            </div>
+            <br>#}
+            <div class="">
+                {% set itemsPerRow = 12 %} {# Số cột hiển thị trên mỗi hàng #}
+                {% set currentColumn = 0 %}
+                {% for category in categories %}
+                    {% if currentColumn == 0 %}
+                        <div class="d-flex justify-content-around flex-row "> {# Mở một hàng mới cho cột đầu tiên #}
+                    {% endif %}
+                    <div class="category-list p">
+                        <div>
+                            <ul class="main-menu m">
+                                <a class="category-link" href="{{ path('productByCat', {'id': category.id}) }}">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div>
+                                            <img src="{{ asset('uploads/image/' ~ category.logo) }}"
+                                                 class="category-logo" height="60px" width="60px"
+                                                 alt="{{ category.catname }}">
+                                        </div>
+                                        <div class="category-name d-flex justify-content-around">{{ category.catname }}</div>
+                                    </div>
+                                </a><br><br>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    {% set currentColumn = currentColumn + 1 %}
+                    {% if currentColumn == itemsPerRow %}
+                        </div> {# Đóng hàng sau khi đã đủ số cột trên một hàng #}
+                        {% set currentColumn = 0 %}
+                    {% endif %}
+                {% endfor %}
+                {% if currentColumn > 0 %}
+            </div> {# Đóng hàng nếu cột cuối cùng chưa đủ số cột trên một hàng #}
+            {% endif %}
+        </div>
+    </ul>
+    </div>
+    </ul>
+    <!-- Tab panes -->
+    <div class="container mt-3">
+        <div class="row">
+            {% set itemsPerPage = 40 %} {# Số sản phẩm hiển thị trên mỗi trang #}
+            {% set currentPage = app.request.get('page', 1) %}
+            {% set start = (currentPage - 1) * itemsPerPage %}
+            {% set end = start + itemsPerPage %}
+            {% for product in products|slice(start, end) %}
+            {% if loop.index % 4 == 1 %}
+        </div>
+        <div class="row">{# Mở một hàng mới cho cột thứ hai #}
+            {% endif %}
+            <div class="col-md-3">
+                <div class="card zoom-effect" style="height: 365px; width: 310px; border: none;">
+                    <a href="{{ path('product_details', {'id': product.id}) }}"
+                       style="text-decoration: none; color: inherit;">
+                        <div class="card-body" style="height: 100%">
+                            <div class="" style="height: 200px">
+                                <img src="{{ asset('uploads/image/' ~ product.productImage) }}" class="card-img-top"
+                                     alt="Product Image" style="object-fit: contain; height: 100%;">
+                            </div>
+                            <div class="text-center">
+                                <br/>
+                                <h4 style="font-size: 18px;">{{ product.name }}</h4>
+                                <strong style="color: red">{{ product.price|number_format(0, ',', '.') }}₫ </strong>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <br>
+            </div>
+
+            {% endfor %}
+        </div>
+        <br>
+        <div class="pagination-container text-center"> {# Thêm class "pagination-container" #}
+            {% set totalPages = (products|length / itemsPerPage)|round(0, 'ceil') %}
+            <div class="pagination">
+                {% for page in 1..totalPages %}
+                    <a href="{{ path('product_list', {'page': page}) }}"
+                       class="{% if page == currentPage %}active{% endif %}">{{ page }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .category-list {
+            background-color: #FFFFFF;
+
+        }
+
+        .main-menu {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 0.5px;
+        }
+
+        .m {
+            margin-top: 0px;
+            margin-right: -10px;
+            margin-bottom: 0px;
+            margin-left: -10px;
+        }
+
+        .p {
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 10px;
+            padding-left: 0px;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #7B7B7B;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .category-link {
+            display: inline-block;
+            text-decoration: none;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+
+        .category-link:focus,
+        .category-link:hover {
+            outline: none;
+        }
+
+        .category-divider {
+            border: none;
+            border-top: 1px solid black;
+            margin-bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .category-name {
+            color: black;
+            text-decoration: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold
+        }
+
+        .category-link {
+            text-decoration: none;
+        }
+
+        .category-link:hover {
+            text-decoration: none;
+        }
+
+        .zoom-effect img {
+            transition: transform 1s ease;
+        }
+
+        .zoom-effect:hover img {
+            transform: scale(1.1);
+        }
+
+    </style>
+
+
+{% endblock %}
+

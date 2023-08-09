@@ -1,0 +1,250 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <br><br>
+    {{ form_start(form) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h5><a class="d-flex align-items-center dropdown-item mb-0">
+                        <div type="button" data-bs-toggle="dropdown" style="width: 60px;">
+                            <img src="{{ asset('uploads/image/' ~ app.user.avatar) }}" alt=""
+                                 style="width: 50px; height: 50px; border: 0;" class="rounded-pill">
+                        </div>
+                        <div style="font-weight: bold;">{{ app.user.username }}</div>
+                    </a>
+                </h5>
+                <br>
+                <hr style="opacity: 0.05;">
+                <div class="d-flex align-items-center">
+                    {#<svg xmlns="http://www.w3.org/2000/svg" style="font-size: 25px; color: blue" width="16" height="16"
+                         fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>#}
+                    <a style="margin-right: 35px; color: #0b5ed7">My account</a></div>
+                <br>
+                {#<div style="margin-right: 35px">
+                    <div class="d-flex align-items-center">
+                    <a href="{{ path('app_user') }}" style="color: black; text-decoration: none;">
+                        Profile
+                    </a></div>
+                </div>#}
+                <br>
+                <!-- change password -->
+                {#<div style="margin-left: 35px">
+                    <a href="{{ path('app_forgot_password_request') }}" id="changepassword" style="color: inherit; text-decoration: none;">
+                        <span onmouseover="this.style.color='hotpink'" onmouseout="this.style.color='inherit'">
+                            Change Password
+                        </span>
+                    </a>
+                </div><br>#}
+                <!-- Purchase order-->
+                {#<div>
+                    <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 25px; color: chocolate" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                    </svg>
+                    <a href="{{ path('purchase_order') }}" style="margin-left: 5px; color: inherit; text-decoration: none;">
+                         <span class="profile-link" onmouseover="this.style.color='#d2691e'" onmouseout="this.style.color='inherit'">
+                           Purchase order
+                        </span></a>
+                </div><br>#}
+            </div>
+
+            <div class="col-sm-9" style="background: white">
+                <div class="col"><br>
+                    <h5>My Profile</h5>
+                    <a>Manage profile information for account security</a>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <style>
+                            .form-table td {
+                                vertical-align: middle;
+                            }
+                        </style>
+
+                        <div class="">
+                            <table class="table form-table">
+                                <tbody>
+                                <tr>
+                                    <td style="text-align: right;">Email</td>
+                                    <td>
+                                        {{ form.vars.value.email|slice(0, 2) ~ '*********@gmail.com' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">Name</td>
+                                    <td>
+                                        {{ form_widget(form.username, {
+                                            'attr': {
+                                                'class': 'form-control',
+                                                'placeholder': 'Name'
+                                            }
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">Phone</td>
+                                    <td>
+                                        {{ form_widget(form.phone, {
+                                            'attr': {
+                                                'class': 'form-control',
+                                                'placeholder': 'Phone'
+                                            }
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">Sex</td>
+                                    <td>
+                                        {{ form_widget(form.sex, {
+                                            'attr': {
+                                                'class': 'form-control',
+                                                'placeholder': 'Sex'
+                                            }
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">Birthday</td>
+                                    <td>
+                                        {{ form_widget(form.birthday, {
+                                            'id' : 'birthday-input',
+                                            'attr': {
+                                                'class': 'form-control',
+                                                'placeholder': 'Ngày/Tháng/Năm'
+                                            }
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn--m btn--inline"
+                                                aria-disabled="false">Save
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-2" style="text-align: center; margin-left: 130px"><br><br>
+                        <div class="col">
+                            <img id="previewImage" src="{{ asset('uploads/image/' ~ user.avatar) }}" alt=""
+                                 style="width: 70px; height: 70px; border: 0;" class="rounded-pill">
+                        </div>
+                        <div class="col">
+                            {{ form_row(form.avatarImage, {
+                                'label': 'Choose Photo',
+                                'id' : 'avatarInput',
+                                'attr': {
+                                    'class': 'form-control'
+                                }
+                            }) }}
+                        </div>
+                        <br>
+                        <a style="font-size: 13px">Maximum file size 1 MB
+                            Format: .JPEG, .PNG</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br><br>
+    {{ form_end(form) }}
+    <style>
+        table.table {
+            border-collapse: collapse;
+        }
+
+        table.table td {
+            border: none;
+            padding: 10px 10px;
+        }
+    </style>
+    <script>
+        // Lắng nghe sự kiện khi người dùng chọn tệp hình ảnh
+        document.getElementById('avatarInput').addEventListener('change', function (event) {
+            var file = event.target.files[0]; // Lấy tệp hình ảnh đầu tiên được chọn
+
+            // Kiểm tra xem người dùng đã chọn tệp hình ảnh hay chưa
+            if (file) {
+                var reader = new FileReader();
+
+                // Đọc nội dung của tệp hình ảnh
+                reader.addEventListener('load', function (e) {
+                    // Hiển thị hình ảnh trong thẻ <img>
+                    document.getElementById('previewImage').setAttribute('src', e.target.result);
+                });
+
+                // Đọc tệp hình ảnh như là một URL dữ liệu
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var birthdayInput = document.getElementById('birthday-input');
+
+            // Gắn sự kiện cho trường ngày sinh
+            birthdayInput.addEventListener('input', function () {
+                var value = this.value;
+
+                // Kiểm tra giá trị nhập vào
+                if (value.length === 2 && !value.includes('/')) {
+                    // Thêm dấu "/" vào sau khi nhập 2 số ngày
+                    value += '/';
+                } else if (value.length === 5 && !value.includes('/', 3)) {
+                    // Thêm dấu "/" vào sau khi nhập 2 số tháng
+                    value += '/';
+                }
+
+                // Cập nhật giá trị của trường ngày sinh
+                this.value = value;
+            });
+
+            // Gắn sự kiện nhảy giữa các trường ngày/tháng/năm khi bấm số
+            birthdayInput.addEventListener('keydown', function (e) {
+                var key = e.keyCode || e.charCode;
+
+                // Kiểm tra phím nhấn là số từ 0 đến 9
+                if (key >= 48 && key <= 57) {
+                    var value = this.value;
+                    var caretPos = this.selectionStart;
+
+                    // Xác định vị trí dấu "/" trong giá trị
+                    var slashPos = value.indexOf('/');
+
+                    // Xác định trường đang được chỉnh sửa (ngày, tháng, năm)
+                    var field = '';
+                    if (caretPos <= 2 || (slashPos !== -1 && caretPos <= slashPos)) {
+                        field = 'day';
+                    } else if (caretPos >= 3 && caretPos <= 5) {
+                        field = 'month';
+                    } else if (caretPos >= 6) {
+                        field = 'year';
+                    }
+
+                    // Di chuyển con trỏ đến trường tiếp theo tương ứng
+                    if (field === 'day') {
+                        this.setSelectionRange(3, 3);
+                    } else if (field === 'month') {
+                        this.setSelectionRange(6, 6);
+                    } else if (field === 'year') {
+                        // Kiểm tra nếu đang ở cuối giá trị và giá trị đã đủ 4 số, di chuyển con trỏ ra khỏi trường
+                        if (caretPos === value.length && value.length === 10) {
+                            this.blur();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

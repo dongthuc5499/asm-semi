@@ -1,0 +1,56 @@
+{% block body %}
+
+    <div class="container mt-3">
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="alert alert-success">
+                <strong>{{ flash_message }}!!!</strong> A product has been added to the list.!!!
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger">
+                <strong>{{ flash_message }}!!!</strong> A product has been removed from the list.!!!
+            </div>
+        {% endfor %}</div>
+
+    <footer id="footer" class="bg text-black py-5" style="background: white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    <h4 class="font-rubik font-size-20">DongThuc Store</h4>
+                    <p class="font-size-14 font-rale text-black-50">No.1 e-commerce store in Vietnam</p>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <h4 class="font-rubik font-size-20">Shopping guide</h4>
+                    <div class="d-flex flex-column flex-wrap">
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Home page</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Introduce</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Category</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">News</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Contact</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">User manual</a>
+                    </div>
+                </div>
+                <div class="col-md-4     col-12">
+                    <h4 class="font-rubik font-size-20">Customer support</h4>
+                    <div class="d-flex flex-column flex-wrap">
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Home page</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Introduce</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Category</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">News</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">Contact</a>
+                        <a href="#" class="font-rale font-size-14 text-black-50 pb-1">User manual</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright text-center bg-dark text-white py-2">
+        <p class="font-rale font-size-14">&copy; Copyrights 2023. Desing By <a href="#" class="color-second" style="color: red; text-decoration: none;  font-weight: bold">DongThuc Store</a></p>
+    </div>
+    <style>
+        .font-rale {
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,113 @@
+{#{% extends 'base.html.twig' %}
+
+{% block title %}Order Information{% endblock %}
+
+{% block body %}
+    <div class="container"><br><br>
+        <div class="row justify-content-center">
+            <div class="col-md-5" style="background: white">
+                <h1>Order Information</h1>
+                <br>
+                {% for address in addresses %}
+                {% if address.user == app.user %}
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="title" style="font-size: 17px"><b>Tên khách hàng:</b></span>
+                        </div>
+                        <div class="col">
+                            <span>{{ address.user.username }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="title" style="font-size: 17px"><b>Số điện thoại:</b></span>
+                        </div>
+                        <div class="col">
+                            <span>{{ address.user.phone }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="title" style="font-size: 17px"><b>Địa chỉ nhận hàng:</b></span>
+                        </div>
+                        <div class="col">
+                            <span>{{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.province }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="title" style="font-size: 17px"><b>Tổng tiền:</b></span>
+                        </div>
+                        <div class="col">
+                            <span><b style="color: red; font-size: 18px">{{ cart.total }}</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <span class="title" style="font-size: 17px"><b>Phí vận chuyển:</b></span>
+                        </div>
+                        <div class="col">
+                            <span><b style="color: red; font-size: 18px">Miễn phí</b></span>
+                        </div>
+                    </div>
+                </div>
+                    <hr>
+                    <div class="form-group">
+                        <b style=" font-size: 25px">
+                            Chọn hình thức thanh toán
+                        </b>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <img src="{{ asset('uploads/image/qgn0x14d.png')}}" class="img-rounded" alt="Cinque Terre" style="height: 30px">
+                        Thanh toán khi giao hàng (COD)
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="title" style="font-size: 18px"><b>Tổng tiền:</b></span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span style="color: red; font-size: 29px"><b>{{ cart.total }}</b></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <form action="{{ path('play_success',{total: cart.total}) }}" method="POST">
+                            {% if form.items is defined and form.items is not null and form.items|length > 0 %}
+                                {% for item in form.items %}
+                                    <td>{{ item.vars.data.product.name }}</td>
+                                    <td>{{ item.quantity.vars.value }}</td>
+                                    <td>{{ item.vars.data.product.price|number_format(0, ',', '.') }} ₫</td>
+                                    <td>{{ (item.vars.data.product.price * item.quantity.vars.value)|number_format(0, ',', '.') }} ₫</td>
+                                {% endfor %}
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary btn-block" style="font-size: 18px; height: 60px"><b>Order now</b></button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div><br><br><br><br>
+    </div>
+    {% set total = cart.total %}
+    {% set app = app.session %}
+    {{ app.set('total', total) }}
+
+{% endblock %}
+#}

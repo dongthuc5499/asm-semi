@@ -1,0 +1,80 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="d-flex justify-content-start " style="background: white; height: 76px; border-radius: 5px; width: 75.9vw; margin-bottom: 10px">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center ">Product</th>
+            <th class="text-center "></th>
+            <th class="text-center ">Category</th>
+            <th class="text-center ">Price</th>
+            <th class="text-center ">Quantity</th>
+            <th class="text-center ">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products|reverse %}
+            <tr>
+                <td class="text-center">
+                    <img src="{{ asset('uploads/image/' ~ product.productImage) }}" class="card-img-top" style="width: 150px;" alt="Product Image">
+                </td>
+                <td class="align-middle">
+                    {{ product.name }}
+                </td>
+                <td class="align-middle text-center ">
+                    {{ product.getCategory().getCatname() }}
+                </td>
+                <td class="align-middle text-center ">
+                    <span style="color: red;">{{ product.price|number_format(0, ',', '.') }}₫</span>
+                </td>
+                <td class="align-middle text-center ">
+                    {{ product.quantity }}
+                </td>
+                <td class="align-middle text-center col-1">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{ path('dashboard_product_edit', {'id': product.id}) }}" class="nav-link button button1" style="border: 2px solid MediumSeaGreen;">Edit</a>&emsp;
+                        <a href="{{ path('dashboard_product_delete', {'id': product.id}) }}" class="nav-link button button3" style="border: 2px solid Red;">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+    <style>
+        .button {
+            /* Green */
+            border: none;
+            border-radius: 7px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+            width: 60px;
+            color: #28B463;
+            border: 2px solid #28B463;
+        }
+
+        .button1:hover {
+            background-color: #28B463;
+            color: white;
+        }
+
+        .button3 {
+            width: 60px;
+            color: #CB4335;
+            border: 2px solid #CB4335;
+        }
+
+        .button3:hover {
+            background-color: #CB4335;
+            color: white;
+        }
+
+    </style>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+    <br>
+    <div class="container">
+    <div class="d-flex justify-content-start " style="background: white; height: 76px; border-radius: 5px; width: 75.9vw; margin-bottom: 10px">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-left">Category</th>
+                <th class="text-left">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories|reverse %}
+                <tr>
+                    <td class="col-10">
+                        <img src="{{ asset('uploads/image/' ~ category.logo) }}" width="70" alt="category image">&emsp;&emsp;
+                        {{ category.catname }}
+                    </td>
+                    <td class="align-middle text-center">
+                        <div class="row">
+                        <a href="{{path('dashboard_category_edit',{'id':category.id})}} " class='nav-link button button1' style="border:2px solid MediumSeaGreen;text-align: center">Edit</a>&emsp;
+                        <a href="{{ path('dashboard_category_delete', {'id': category.id}) }} "class='nav-link button button3' style="border:2px solid Red;text-align: center">Delete</a>
+                        </div>
+                    </td>
+                    <td class="align-middle text-center"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <style>
+        .button {
+            /* Green */
+            border: none;
+            border-radius: 7px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+            width: 60px;
+            color: #28B463;
+            border: 2px solid #28B463;
+        }
+
+        .button1:hover {
+            background-color: #28B463;
+            color: white;
+        }
+
+        .button3 {
+            width: 60px;
+            color: #CB4335;
+            border: 2px solid #CB4335;
+        }
+
+        .button3:hover {
+            background-color: #CB4335;
+            color: white;
+        }
+
+    </style>
+{% endblock %}

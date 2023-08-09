@@ -1,0 +1,19 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+increase_quantity:
+    path: /increase-quantity/{id}
+    controller: App\Controller\CartController::increaseQuantity
+
+remove_item:
+    path: /remove-item/{orderId}/{itemId}
+    controller: App\Controller\CartController::removeItemAction
+
+clear_items:
+    path: /clear-items/{orderId}
+    controller: App\Controller\CartController::clearItemsAction

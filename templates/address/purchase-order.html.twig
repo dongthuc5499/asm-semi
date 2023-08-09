@@ -1,0 +1,158 @@
+{#{% extends 'base.html.twig' %}
+
+{% block title %}Purchase Order{% endblock %}
+
+{% block body %}
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h5><a class="d-flex align-items-center dropdown-item mb-0">
+                        <div type="button" data-bs-toggle="dropdown" style="width: 60px;">
+                            <img src="{{ asset('uploads/image/' ~ app.user.avatar) }}" alt="" style="width: 50px; height: 50px; border: 0;" class="rounded-pill">
+                        </div>
+                        <div style="font-weight: bold;">{{ app.user.username }}</div>
+                    </a>
+                </h5><br>
+                <hr style="opacity: 0.05;">
+                <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 25px; color: blue" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>
+                    <a style="margin-left: 10px" >My account</a></div><br>
+                <div style="margin-left: 35px">
+                    <a href="{{ path('app_user') }}" style="color: inherit; text-decoration: none;">
+                        <span onmouseover="this.style.color='hotpink'" onmouseout="this.style.color='inherit'">
+                            Profile
+                        </span>
+                    </a>
+                </div><br>
+
+                <div style="margin-left: 35px">
+                    <a href="{{ path('app_forgot_password_request') }}" id="changepassword" style="color: inherit; text-decoration: none;">
+                        <span onmouseover="this.style.color='hotpink'" onmouseout="this.style.color='inherit'">
+                            Change Password
+                        </span>
+                    </a>
+                </div><br>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" style="font-size: 25px; color: chocolate" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                    </svg>
+                    <a href="#" style="margin-left: 5px; color: #d2691e; text-decoration: none;">
+                        Purchase order</a>
+                </div><br>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="col" style="background: white;height: 50px; padding: 10px"><h4><b>Orders purchased</b></h4></div>
+                <div class="form-group" style="background: white">
+                    {% if purchaseOrders is empty %}
+                        <div style="background: #e5e5e5; height: 30px"></div>
+                        <div class="row">
+                            <div class="col-5"></div>
+                        <div class="col-3" style="height: 300px; padding: 100px 0 0 10px">
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16" style="font-size: 50px; margin-left: 60px; color: #fd8332">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                            </p>
+                            <p style="font-size: 20px; color: #fd8332"><b>No orders available.</b></p>
+                        </div>
+                            <div class="col-5"></div>
+                        </div>
+                    {% else %}
+                        {% set currentIdOrder = 0 %}
+                        {% set totalAmount = 0 %}
+                        {% for purchaseOrder in purchaseOrders %}
+                            {% if purchaseOrder.getIdOrder() != currentIdOrder %}
+                                {% if currentIdOrder != 0 %}
+                                    <div style="background: #e5e5e5">
+                                        <div class="form-group" style="background: #faf8f1; height: 50px; border-radius: 6px; margin-bottom: 0; padding: 10px">
+                                            <p style="float: right; margin-right: 20px"><b>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16" style="font-size: 20px; color: #28B463">
+                                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                    </svg>
+                                                    Total Amount: <a style="color: red">{{ totalAmount|number_format(0, ',', '.') }}₫</a></b></p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div style="background: #e5e5e5; height: 30px"></div>
+                                <div class="row">
+                                    <div class="col-10" style="font-size: 17px; padding: 10px; margin: 10px"><b>Order ID #{{ purchaseOrder.getIdOrder() }}</b></div>
+                                    <div class="col-2" style="text-align: center; padding: 20px; margin-left: -30px">
+                                        {% if purchaseOrders[0].getStatus() == 0 %}
+                                            <span class="badge bg-danger" style="font-size: 13px">Đang giao hàng</span>
+                                        {% elseif purchaseOrders[0].getStatus() == 1 %}
+                                            <span class="badge bg-success" style="font-size: 13px">Hàng đã được giao</span>
+                                        {% endif %}</div>
+                                </div><hr>
+                                {% set totalAmount = 0 %}
+                            {% endif %}
+                            <a href="{{ path('product_details', {'id': purchaseOrder.getProductId()}) }}" class="product-order">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="{{ asset('uploads/image/' ~ purchaseOrder.getPurchaseImage()) }}" class="card-img-top" height="100px" width="150px" alt="Product Image">
+                                        </div>
+                                        <div class="col-8">
+                                            <span><b style="font-size: 16px">{{ purchaseOrder.getName() }}</b></span>
+                                            <p>x{{ purchaseOrder.getQuantity() }}</p>
+                                        </div>
+                                        <div class="col-2">
+                                            <span style="color: red; font-size: 15px; float: right; margin-right: 20px">{{ purchaseOrder.getPrice()|number_format(0, ',', '.') }}₫ </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a><div style="background: #e5e5e5; height: 1px"></div>
+                            {% set totalAmount = totalAmount + (purchaseOrder.getPrice() * purchaseOrder.getQuantity()) %}
+                            {% set currentIdOrder = purchaseOrder.getIdOrder() %}
+                            {% if loop.last %}
+                                <div style="background: #e5e5e5">
+                                    <div class="form-group" style="background: #faf8f1; height: 50px; border-radius: 6px; padding: 10px">
+                                        <p style="float: right; margin-right: 20px"><b>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16" style="font-size: 20px; color: #28B463">
+                                                    <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                    <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                    <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                </svg>
+                                                Total Amount: <a style="color: red">{{ totalAmount|number_format(0, ',', '.') }}₫</a></b></p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        table.table {
+            border-collapse: collapse;
+        }
+
+        table.table td {
+            border: none;
+            padding: 10px 10px;
+        }
+        .product-order{
+            text-decoration: none;
+            color: black;
+        }
+        .product-order:hover{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    <script>
+
+    </script>
+
+{% endblock %}
+#}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body %}
+<div class="container"><br><br><br><br><br><br>
+    <h1>Search Results for "{{ keyword }}"</h1><br><br>
+    {% if products is not empty %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <img src="{{ asset('uploads/image/' ~ product.productImage) }}"
+                         class="category-logo" height="60px" width="60px">
+                    <a href="{{ path('product_details', {'id': product.id}) }}">{{ product.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

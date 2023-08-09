@@ -1,0 +1,66 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+<br>
+<div class="container-fluid">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center ">ID Order</th>
+            <th class="text-center ">Product</th>
+            <th class="text-center "></th>
+            <th class="text-center ">Status</th>
+            <th class="text-center ">Quantity</th>
+            <th class="text-center ">Price</th>
+            <th class="text-center ">User Name</th>
+            <th class="text-center ">Phone</th>
+            <th class="text-center ">Address</th>
+            <th class="text-center ">Order Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for purchaseOrder in purchaseOrders %}
+            {% for address in addresses %}
+                {% if address.user.id == purchaseOrder.getUser().getId() %}
+                    <tr>
+                        <td>#{{ purchaseOrder.getIdOrder() }}</td>
+                        <td>
+                            <img src="{{ asset('uploads/image/' ~ purchaseOrder.getPurchaseImage()) }}" class="card-img-top" style="width: 100px" alt="Product Image">
+                        </td>
+                        <td>
+                            {{ purchaseOrder.getName() }}
+                        </td>
+                        <td>
+                            {% if purchaseOrder.getStatus() == 0 %}
+                                <span class="badge bg-danger" style="font-size: 13px">Chưa được duyệt</span>
+                            {% elseif purchaseOrder.getStatus() == 1 %}
+                                <span class="badge bg-success" style="font-size: 13px">Đã được duyệt</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            x{{ purchaseOrder.getQuantity() }}
+                        </td>
+                        <td>
+                            <span style="color: red;">{{ purchaseOrder.getPrice()|number_format(0, ',', '.') }}₫ </span>
+                        </td>
+                        <td>
+                            {{ address.user.getUsername() }}
+                        </td>
+                        <td>
+                            {{ address.user.getPhone() }}
+                        </td>
+                        <td>
+                            {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.province }}
+                        </td>
+                        <td>
+                            {{ purchaseOrder.getDate()|date('d/m/Y H:i:s') }}
+                        </td>
+                        {#                    <td class="align-middle text-center"></td>#}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

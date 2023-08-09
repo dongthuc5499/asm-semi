@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset ('uploads/image/logodt.jpg') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container-fluid p-0" style="background: #f1f5f9">
+    <div class="row">
+        <div class="col-2 bg-dark">
+            <!-- Sidebar content -->
+            <a href="{{ path('product_list') }}">
+            <div style="height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <img src="{{ asset('uploads/image/logodt.jpg')}}" alt="" style="width:60px; height: 60px;">
+            </div>
+            </a>
+            <br>
+
+            <a href="{{ path('dashboard_index') }}">
+                <div style="margin-left: 20px"><b>Dashboard</b></div>
+            </a>
+
+            <br>
+            {#<div style="margin-left: 20px; color: rgba(115,115,116,0.66);"><b>ORDERS MANAGEMENT</b></div>
+            <br>
+
+            <a href="{{ path('dashboard_purchase-order') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Accept Orders</b></div>
+            </a>
+            <a href="{{ path('all-orders') }}">
+                <div style="margin-left: 20px; height: 40px"><b>All orders</b></div>
+            </a>
+
+            <br>#}
+            <div style="margin-left: 20px; color: rgba(115,115,116,0.66);"><b>CATEGORYS MANAGEMENT</b></div>
+            <br>
+            <a href="{{ path('dashboard_category_create') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Add Category</b></div>
+            </a>
+            <a href="{{ path('dashboard_category_details') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Category List</b></div>
+            </a>
+
+            <br>
+            <div style="margin-left: 20px; color: rgba(115,115,116,0.66);"><b>PRODUCTS MANAGEMENT</b></div>
+            <br>
+            <a href="{{ path('dashboard_product_create') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Add Product</b></div>
+            </a>
+            <a href="{{ path('dashboard_product_list') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Product List</b></div>
+            </a>
+
+            <br>
+            <div style="margin-left: 20px; color: rgba(115,115,116,0.66);"><b>USERS MANAGEMENT</b></div>
+            <br>
+            <a href="{{ path('dashboard_user') }}">
+                <div style="margin-left: 20px; height: 40px"><b>Grant permissions to users</b></div>
+            </a>
+        </div>
+        <div class="col-2" style="height: 100vh;">
+            <!-- Content will be included here from child pages -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+</body>
+<style>
+    .full-height {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        overflow-y: auto;
+    }
+
+    .overflow-auto {
+        overflow-y: auto;
+    }
+    a {
+        text-decoration: none;
+        color: #8e8f93;
+        transition-duration: 0.5s;
+    }
+    a:hover {
+
+        color: white;
+    }
+</style>
+</html>
