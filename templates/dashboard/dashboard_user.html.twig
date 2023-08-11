@@ -43,9 +43,9 @@
                     {% endfor %}
                 </span>
                 <br><br>
-                {#{% if 'ROLE_SUPER_ADMIN' not in user.roles %}
+                {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
                     <a href="{{ path('dashboard_make_admin', { 'id': user.id }) }}" class="btn btn-primary"><b>Thành Admin</b></a>
-                {% endif %}#}
+                {% endif %}
             </div>
         </div>
         </div>
