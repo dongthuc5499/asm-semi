@@ -76,14 +76,7 @@ class LoginController extends AbstractController
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-        //on renvoie à la liste des utilisateurs
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
-    }
+
 
     public function adminDashboard(): Response
     {

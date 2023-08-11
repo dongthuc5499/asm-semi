@@ -195,6 +195,22 @@ class AddressController extends AbstractController
     /**
      * @Route("/purchase-order", name="purchase_order")
      */
+    public function purchaseOrder(Request $request, CartManager $cartManager, PurchaseOrderRepository $purchaseOrderRepository): Response
+    {
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $cart = $cartManager->getCurrentCart();
 
+        // Lấy người dùng đang đăng nhập
+        $user = $this->getUser();
+
+        // Lấy danh sách các đối tượng PurchaseOrder của người dùng hiện tại từ repository
+        $purchaseOrders = $purchaseOrderRepository->findByUser($user);
+
+        return $this->render('address/purchase-order.html.twig', [
+            'categories' => $categories,
+            'cart' => $cart,
+            'purchaseOrders' => $purchaseOrders,
+        ]);
+    }
 }
 
