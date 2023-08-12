@@ -40,7 +40,27 @@ class ResetPasswordController extends AbstractController
  * Display & process form to request a password reset.
  */
 #[Route('', name: 'app_forgot_password_request')]
+public
+function request(Request $request, MailerInterface $mailer, ManagerRegistry $doctrine, CartManager $cartManager): Response
+{
+    $form = $this->createForm(ResetPasswordRequestFormType::class);
+    $form->handleRequest($request);
+    $categories = $doctrine->getRepository(Category::class)->findAll();
+    $cart = $cartManager->getCurrentCart();
 
+    if ($form->isSubmitted() && $form->isValid()) {
+        return $this->processSendingPasswordResetEmail(
+            $form->get('email')->getData(),
+            $mailer
+        );
+    }
+
+    return $this->render('reset_password/request.html.twig', [
+        'requestForm' => $form->createView(),
+        'categories' => $categories,
+        'cart' => $cart,
+    ]);
+}
 
 /**
  * Confirmation page after a user has requested a password reset.
