@@ -52,16 +52,7 @@ class CartController extends AbstractController
         ]);
     }
 
-//    private function getCartItems(Order $cart): array
-//    {
-//        $items = [];
-//
-//        foreach ($cart->getItems() as $item) {
-//            $items[] = $item;
-//        }
-//
-//        return $items;
-//    }
+
 
     #[Route('/cart/{orderId}/remove/{itemId}', name: 'remove_item', methods: ['GET'])]
     public function removeItemAction(
