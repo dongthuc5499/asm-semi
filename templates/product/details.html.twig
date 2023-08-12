@@ -125,18 +125,7 @@
                <br><br> <hr class="navbar-nav" width="400px" align="left" margin-left="200px"><a><span
                                         style="font-size:13px"><b>Quantity: </b>{{ products.quantity }}</span></a>
                     <br><a><span style="font-size:13px"><b>Due: </b>{{ products.date|date('F j,Y, g:i a') }}</span></a><br><br>
-                            {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {{ form_start(form) }}
-                    <div class="form-group" style="display: none;">
-                    {{ form_widget(form.quantity, {'attr': {'class': 'hidden', 'value': '1'}}) }}
-                        </div>
-                    <div class="form-group">
-                            {{ form_widget(form.add, {'attr': {'class': 'btn btn-warning', 'style': 'width: 100%'}}) }}
-                        </div>
-                    {{ form_end(form) }}
-                {% else %}
-                    <a href="{{ path('app_login') }}" class="btn btn-warning" style="width: 100%">Add to Cart</a>
-                            {% endif %}#}
+                            
                             {% if is_granted('ROLE_ADMIN') %}
           <span style="float: right"><a href="{{ path('product_edit',{'id':products.id}) }} "
                                         class='btn btn-success btn-sm '>Edit</a>

@@ -32,6 +32,11 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'cart')]
     public function index(ManagerRegistry $doctrine, CartManager $cartManager, Request $request): Response
     {
+//        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+//        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            // Chuyển hướng đến trang đăng nhập
+//            return new RedirectResponse($this->generateUrl('app_login'));
+//        }
 
         $categories = $doctrine->getRepository(Category::class)->findAll();
         $cart = $cartManager->getCurrentCart();
