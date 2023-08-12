@@ -63,33 +63,7 @@ class CategoryController extends AbstractController
 
 
 
-//    #[Route('/admin/category/create', name: 'category_create')]
-//    public function createCategory(ManagerRegistry $doctrine,Request $request)
-//    {
-//
-//        $products = $doctrine->getRepository(Category::class)->findAll();
-//        $categories = new Category();
-//        $form = $this->createForm(CategoryType::class, $categories);
-//
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $doctrine->getManager();
-//            $em->persist($categories);
-//            $em->flush();
-//
-//            $this->addFlash(
-//                'notice',
-//                'Category Added'
-//            );
-//
-//            return $this->redirectToRoute('category_details', [
-//                'id' => $categories->getId()
-//            ]);
-//
-//        }
-//
-//        return $this->renderForm('category/create.html.twig', ['form' => $form, 'categories'=>$categories, '$products'=>$products]);
-//    }
+
 
     #[Route('/admin/category/create', name: 'category_create')]
     public function createCategory(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger, CartManager $cartManager)
@@ -148,25 +122,7 @@ class CategoryController extends AbstractController
         return $this->renderForm('category/create.html.twig', ['form' => $form, 'categories' => $categories, 'products' => $products, 'cart' => $cart]);
     }
 
-//    #[Route('/category/edit/{id}', name: 'category_edit')]
-//    public function editAction(ManagerRegistry $doctrine, int $id,Request $request): Response{
-//        $entityManager = $doctrine->getManager();
-//        $categories = $entityManager->getRepository(Category::class)->find($id);
-//        $form = $this->createForm(CategoryType::class, @$categories);
-//        $form->handleRequest($request);
-//        $products = $doctrine->getRepository(Category::class)->findAll();
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            $em = $doctrine->getManager();
-//            $em->persist($categories);
-//            $em->flush();
-//            return $this->redirectToRoute('category_details', [
-//                'id' => $categories->getId()
-//            ]);
-//
-//        }
-//        return $this->renderForm('category/edit.html.twig', ['form' => $form,'categories'=>$categories, '$products'=>$products]);
-//    }
+
 
     #[Route('/category/edit/{id}', name: 'category_edit')]
     public function editAction(ManagerRegistry $doctrine, int $id, Request $request, SluggerInterface $slugger, CartManager $cartManager): Response
